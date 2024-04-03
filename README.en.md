@@ -4,13 +4,13 @@
 高温，干旱极端天气预警系统后端
 
 #### Software Architecture
-Software architecture description
+python 3.10.5
+flask 2.0.1
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+python 3.10.5
+flask 2.0.1
 
 #### Instructions
 

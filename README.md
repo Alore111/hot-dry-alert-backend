@@ -4,14 +4,13 @@
 高温，干旱极端天气预警系统后端
 
 #### 软件架构
-软件架构说明
-
+python 3.10.5
+flask 2.0.1
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  `pip install -r requirements.txt`
+2.  `python app.py`
 
 #### 使用说明
 
