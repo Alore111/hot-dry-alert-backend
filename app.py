@@ -90,15 +90,20 @@ def getDataPhoto():
                         'xiaririshu(SU)','reyerishu(TR)','nianzuidazuigaowendu(TXx)','nianzuixiaozuigaowendu(TXn)']
     sel_weather_mod = ['ACCESS-CM2','bcc_cma','CN05.11','cnrm6','HadGEM-GC31-LL','INM-CM5-0','IPSL-CM6A-LR','MRI-ESM2-0']
     
-
     js_data = request.get_json()
-    project_type = js_data.get('type')  # 项目类型（高温|干旱）
-    ageing = js_data.get('ageing')    # 时效（观测|历史|126|245|370|585）
-    causing_factor = js_data.get('causing_factor')  # 致灾因子
-    weather_mod = js_data.get('weather_mod')    # 气候模式/数据类型
-    data_year = js_data.get('data_year')    # 数据年份
-
-
+    if js_data:
+        project_type = js_data.get('type')  # 项目类型（高温|干旱）
+        ageing = js_data.get('ageing')    # 时效（观测|历史|126|245|370|585）
+        causing_factor = js_data.get('causing_factor')  # 致灾因子
+        weather_mod = js_data.get('weather_mod')    # 气候模式/数据类型
+        data_year = js_data.get('data_year')    # 数据年份
+    else:
+        project_type = request.args.get('type')
+        ageing = request.args.get('ageing')
+        causing_factor = request.args.get('causing_factor')
+        weather_mod = request.args.get('weather_mod')
+        data_year = request.args.get('data_year')
+        
     if project_type == 'hot':
         dir_path = 'img/hot-img/'
     else:

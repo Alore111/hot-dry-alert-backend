@@ -2,7 +2,7 @@
 - 接口地址（GET）
 	- `https://hotdryalert.2ndtool.top/getDataPhoto`
 - 示例请求json
-	-
+	- 
 	  ```json
 	    {
             "type": "ganhan",
