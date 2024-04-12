@@ -1,4 +1,6 @@
+import base64
 import json
+import os
 from flask import Flask, request, jsonify, render_template
 import logging
 from flask_cors import CORS
@@ -79,7 +81,59 @@ def complete_province_name(name):
     }
     return province_names.get(name, name)  # 如果在列表中找到则返回对应的省份名字，否则原样返回
 
+@app.route('/getDataPhoto', methods=['GET'])
+def getDataPhoto():
+    sel_project_type = ['hot', 'ganhan']
+    sel_ageing = ['guance', 'his', '126', '245', '370', '585']
+    sel_causing_factor = ['jiduanganhanrishu','leijiganhanliang','CDD','CWD',\
+                        'jiduangaowenliang','jiduangaowenrishu','nuanye(TN90P)','nuanzhou(TX90P)',\
+                        'xiaririshu(SU)','reyerishu(TR)','nianzuidazuigaowendu(TXx)','nianzuixiaozuigaowendu(TXn)']
+    sel_weather_mod = ['ACCESS-CM2','bcc_cma','CN05.11','cnrm6','HadGEM-GC31-LL','INM-CM5-0','IPSL-CM6A-LR','MRI-ESM2-0']
+    
 
+    js_data = request.get_json()
+    project_type = js_data.get('type')  # 项目类型（高温|干旱）
+    ageing = js_data.get('ageing')    # 时效（观测|历史|126|245|370|585）
+    causing_factor = js_data.get('causing_factor')  # 致灾因子
+    weather_mod = js_data.get('weather_mod')    # 气候模式/数据类型
+    data_year = js_data.get('data_year')    # 数据年份
+
+
+    if project_type == 'hot':
+        dir_path = 'img/hot-img/'
+    else:
+        dir_path = 'img/dry-img/'
+
+    # 创建一个空数组以存储文件名
+    file_names = []
+
+    # 遍历目录并将符合筛选条件的文件名追加到数组中
+    for file_name in os.listdir(dir_path):
+        # 检查文件名是否符合筛选条件
+        if (project_type in file_name) and (ageing in file_name) and (causing_factor in file_name) and (weather_mod in file_name) and (data_year in file_name):
+            file_names.append(file_name)
+        
+    # 检查数组是否为空
+    if not file_names:
+        # 如果数组为空，则返回错误信息
+        return jsonify({
+            'code': 404,
+            'error': 'Data not found'
+        })
+
+    file_name = dir_path + file_names[0]
+    
+    # 读取文件内容并将其编码为base64
+    with open(file_name, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+
+    # 添加base64编码的图像数据前缀
+    base64_image = "data:image/jpeg;base64," + encoded_string
+
+    # 返回带有前缀的base64编码的图像数据
+    return jsonify({
+        'base64_image': base64_image
+    })
 
 
 if __name__ == '__main__':
