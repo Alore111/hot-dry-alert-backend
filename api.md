@@ -1,5 +1,5 @@
 - # hot-dry api
-- 接口地址（GET）
+- 接口地址（GET，POST）
 	- `https://hotdryalert.2ndtool.top/getDataPhoto`
 - 示例请求json
 	- 
@@ -44,3 +44,4 @@
 	- 返回一个包含base64编码的图像数据的JSON对象。
 - 注
   - 其中某些值之间存在相互限制的关系（如his不能做出预测），如果后端没有相应数据，则返回404错误。
+  - 为了方便开发，在执行时也可直接使用URL参数请求
