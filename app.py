@@ -88,7 +88,7 @@ def getDataPhoto():
     sel_causing_factor = ['jiduanganhanrishu','leijiganhanliang','CDD','CWD',\
                         'jiduangaowenliang','jiduangaowenrishu','nuanye(TN90P)','nuanzhou(TX90P)',\
                         'xiaririshu(SU)','reyerishu(TR)','nianzuidazuigaowendu(TXx)','nianzuixiaozuigaowendu(TXn)']
-    sel_weather_mod = ['ACCESS-CM2','bcc_cma','CN05.11','cnrm6','HadGEM-GC31-LL','INM-CM5-0','IPSL-CM6A-LR','MRI-ESM2-0']
+    sel_weather_mod = ['ACCESS-CM2','bcc_cma','CN05.11','cnrm6','HadGEM-GC31-LL','INM-CM5-0','IPSL-CM6A-LR','MRI-ESM2-0','his','China']
     
     if request.method == 'GET':
         project_type = request.args.get('type')
@@ -112,10 +112,11 @@ def getDataPhoto():
     # 创建一个空数组以存储文件名
     file_names = []
 
+    print(project_type, ageing, causing_factor, weather_mod, data_year)
     # 遍历目录并将符合筛选条件的文件名追加到数组中
     for file_name in os.listdir(dir_path):
         # 检查文件名是否符合筛选条件
-        if (project_type in file_name) and (ageing in file_name) and (causing_factor in file_name) and (weather_mod in file_name) and (data_year in file_name):
+        if (ageing in file_name) and (causing_factor in file_name) and (weather_mod in file_name) and (data_year in file_name):
             file_names.append(file_name)
         
     # 检查数组是否为空
